@@ -164,6 +164,7 @@ haproxy_response(options).each do |line|
   next if options.proxies && !options.proxies.include?(row['pxname'])
   next if ['statistics', 'admin_stats', 'stats'].include? row['pxname']
   next if row['status'] == 'no check'
+  next if row['pxname'] =~ /redis/
 
   role = %w[BACKEND FRONTEND].include?(row['svname']) || row['bck'].to_i == 0 ? :act : :bck
   if row['slim'].to_i == 0
